@@ -1,4 +1,5 @@
 import { Loja } from './loja';
+import { Endereco } from './endereco';
 
 
 function verificaCampoObrigatorio(mensagemEsperada: string, loja: Loja) {
@@ -104,112 +105,112 @@ IE: 123456789`
 
 
 test('Loja Completa', () => {
-  let lojaCompleta: Loja = new Loja(NOME_LOJA, LOGRADOURO, NUMERO, COMPLEMENTO,
-    BAIRRO, MUNICIPIO, ESTADO, CEP, TELEFONE, OBSERVACAO, CNPJ,
+  let lojaCompleta: Loja = new Loja(NOME_LOJA, new Endereco(LOGRADOURO, NUMERO, COMPLEMENTO,
+    BAIRRO, MUNICIPIO, ESTADO, CEP), TELEFONE, OBSERVACAO, CNPJ,
     INSCRICAO_ESTADUAL);
   expect(lojaCompleta.dados_loja()).toBe(TEXTO_ESPERADO_LOJA_COMPLETA);
 });
 
 test('Nome vazio', () => {
-  let nomeVazio: Loja = new Loja("", LOGRADOURO, NUMERO, COMPLEMENTO, BAIRRO,
-    MUNICIPIO, ESTADO, CEP, TELEFONE, OBSERVACAO, CNPJ, INSCRICAO_ESTADUAL);
+  let nomeVazio: Loja = new Loja("", new Endereco(LOGRADOURO, NUMERO, COMPLEMENTO, BAIRRO,
+    MUNICIPIO, ESTADO, CEP), TELEFONE, OBSERVACAO, CNPJ, INSCRICAO_ESTADUAL);
   verificaCampoObrigatorio(`O campo nome da loja é obrigatório`, nomeVazio);
 });
 
 test('Logradouro vazio', () => {
-  let logradouroVazio: Loja = new Loja(NOME_LOJA, "", NUMERO, COMPLEMENTO, 
-    BAIRRO, MUNICIPIO, ESTADO, CEP, TELEFONE, OBSERVACAO, CNPJ,
+  let logradouroVazio: Loja = new Loja(NOME_LOJA, new Endereco("", NUMERO, COMPLEMENTO,
+    BAIRRO, MUNICIPIO, ESTADO, CEP), TELEFONE, OBSERVACAO, CNPJ,
     INSCRICAO_ESTADUAL);
   verificaCampoObrigatorio(`O campo logradouro do endereço é obrigatório`,
     logradouroVazio);
 });
 
 test('Número zero', () => {
-  let numeroZero: Loja = new Loja(NOME_LOJA, LOGRADOURO, 0, COMPLEMENTO, 
-    BAIRRO, MUNICIPIO, ESTADO, CEP, TELEFONE, OBSERVACAO, CNPJ,
+  let numeroZero: Loja = new Loja(NOME_LOJA, new Endereco(LOGRADOURO, 0, COMPLEMENTO,
+    BAIRRO, MUNICIPIO, ESTADO, CEP), TELEFONE, OBSERVACAO, CNPJ,
     INSCRICAO_ESTADUAL);
   expect(numeroZero.dados_loja()).toBe(TEXTO_ESPERADO_SEM_NUMERO);
 });
 
 test('Complemento vazio', () => {
-  let complementoVazio: Loja = new Loja(NOME_LOJA, LOGRADOURO, NUMERO, "", 
-    BAIRRO, MUNICIPIO, ESTADO, CEP, TELEFONE, OBSERVACAO, CNPJ, 
+  let complementoVazio: Loja = new Loja(NOME_LOJA, new Endereco(LOGRADOURO, NUMERO, "",
+    BAIRRO, MUNICIPIO, ESTADO, CEP), TELEFONE, OBSERVACAO, CNPJ,
     INSCRICAO_ESTADUAL);
   expect(complementoVazio.dados_loja())
     .toBe(TEXTO_ESPERADO_SEM_COMPLEMENTO);
 });
 
 test('Bairro vazio', () => {
-  let bairroVazio: Loja = new Loja(NOME_LOJA, LOGRADOURO, NUMERO, COMPLEMENTO,
-    "", MUNICIPIO, ESTADO, CEP, TELEFONE, OBSERVACAO, CNPJ, 
+  let bairroVazio: Loja = new Loja(NOME_LOJA, new Endereco(LOGRADOURO, NUMERO, COMPLEMENTO,
+    "", MUNICIPIO, ESTADO, CEP), TELEFONE, OBSERVACAO, CNPJ,
     INSCRICAO_ESTADUAL);
   expect(bairroVazio.dados_loja()).toBe(TEXTO_ESPERADO_SEM_BAIRRO);
 });
 
 test('Município vazio', () => {
-  let municipioVazio: Loja = new Loja(NOME_LOJA, LOGRADOURO, NUMERO,
-    COMPLEMENTO, BAIRRO, "", ESTADO, CEP, TELEFONE, OBSERVACAO, CNPJ,
+  let municipioVazio: Loja = new Loja(NOME_LOJA, new Endereco(LOGRADOURO, NUMERO,
+    COMPLEMENTO, BAIRRO, "", ESTADO, CEP), TELEFONE, OBSERVACAO, CNPJ,
     INSCRICAO_ESTADUAL);
-  verificaCampoObrigatorio(`O campo município do endereço é obrigatório`, 
+  verificaCampoObrigatorio(`O campo município do endereço é obrigatório`,
     municipioVazio);
 });
 
 test('Estado vazio', () => {
-  let estadoVazio: Loja = new Loja(NOME_LOJA, LOGRADOURO, NUMERO,
-    COMPLEMENTO, BAIRRO, MUNICIPIO, "", CEP, TELEFONE, OBSERVACAO, CNPJ,
+  let estadoVazio: Loja = new Loja(NOME_LOJA, new Endereco(LOGRADOURO, NUMERO,
+    COMPLEMENTO, BAIRRO, MUNICIPIO, "", CEP), TELEFONE, OBSERVACAO, CNPJ,
     INSCRICAO_ESTADUAL);
-  verificaCampoObrigatorio(`O campo estado do endereço é obrigatório`, 
+  verificaCampoObrigatorio(`O campo estado do endereço é obrigatório`,
     estadoVazio);
 });
 
 test('CEP vazio', () => {
-  let cepVazio: Loja = new Loja(NOME_LOJA, LOGRADOURO, NUMERO,
-    COMPLEMENTO, BAIRRO, MUNICIPIO, ESTADO, "", TELEFONE, OBSERVACAO, CNPJ,
+  let cepVazio: Loja = new Loja(NOME_LOJA, new Endereco(LOGRADOURO, NUMERO,
+    COMPLEMENTO, BAIRRO, MUNICIPIO, ESTADO, ""), TELEFONE, OBSERVACAO, CNPJ,
     INSCRICAO_ESTADUAL);
   expect(cepVazio.dados_loja()).toBe(TEXTO_ESPERADO_SEM_CEP);
 });
 
 test('Telefone vazio', () => {
-  let telefoneVazio: Loja = new Loja(NOME_LOJA, LOGRADOURO, NUMERO,
-    COMPLEMENTO, BAIRRO, MUNICIPIO, ESTADO, CEP, "", OBSERVACAO, CNPJ,
+  let telefoneVazio: Loja = new Loja(NOME_LOJA, new Endereco(LOGRADOURO, NUMERO,
+    COMPLEMENTO, BAIRRO, MUNICIPIO, ESTADO, CEP), "", OBSERVACAO, CNPJ,
     INSCRICAO_ESTADUAL);
   expect(telefoneVazio.dados_loja()).toBe(TEXTO_ESPERADO_SEM_TELEFONE);
 });
 
 test('Observação vazia', () => {
-  let observacaoVazia: Loja = new Loja(NOME_LOJA, LOGRADOURO, NUMERO,
-    COMPLEMENTO, BAIRRO, MUNICIPIO, ESTADO, CEP, TELEFONE, "", CNPJ,
+  let observacaoVazia: Loja = new Loja(NOME_LOJA, new Endereco(LOGRADOURO, NUMERO,
+    COMPLEMENTO, BAIRRO, MUNICIPIO, ESTADO, CEP), TELEFONE, "", CNPJ,
     INSCRICAO_ESTADUAL);
   expect(observacaoVazia.dados_loja())
     .toBe(TEXTO_ESPERADO_SEM_OBSERVACAO);
 });
 
 test('CNPJ vazio', () => {
-  let cnpjVazio: Loja = new Loja(NOME_LOJA, LOGRADOURO, NUMERO,
-    COMPLEMENTO, BAIRRO, MUNICIPIO, ESTADO, CEP, TELEFONE, OBSERVACAO, "",
+  let cnpjVazio: Loja = new Loja(NOME_LOJA, new Endereco(LOGRADOURO, NUMERO,
+    COMPLEMENTO, BAIRRO, MUNICIPIO, ESTADO, CEP), TELEFONE, OBSERVACAO, "",
     INSCRICAO_ESTADUAL);
   verificaCampoObrigatorio(`O campo CNPJ da loja é obrigatório`, cnpjVazio);
 });
 
 test('Inscrição estadual vazia', () => {
-  let ieVazia: Loja = new Loja(NOME_LOJA, LOGRADOURO, NUMERO,
-    COMPLEMENTO, BAIRRO, MUNICIPIO, ESTADO, CEP, TELEFONE, OBSERVACAO, CNPJ, 
+  let ieVazia: Loja = new Loja(NOME_LOJA, new Endereco(LOGRADOURO, NUMERO,
+    COMPLEMENTO, BAIRRO, MUNICIPIO, ESTADO, CEP), TELEFONE, OBSERVACAO, CNPJ,
     "");
   verificaCampoObrigatorio(`O campo inscrição estadual da loja é obrigatório`,
     ieVazia);
 });
 
 test('Número zero e complemento vazio', () => {
-  let numeroZeroComplementoVazio: Loja = new Loja(NOME_LOJA, LOGRADOURO, 0, "",
-    BAIRRO, MUNICIPIO, ESTADO, CEP, TELEFONE, OBSERVACAO, CNPJ, 
+  let numeroZeroComplementoVazio: Loja = new Loja(NOME_LOJA, new Endereco(LOGRADOURO, 0, "",
+    BAIRRO, MUNICIPIO, ESTADO, CEP), TELEFONE, OBSERVACAO, CNPJ,
     INSCRICAO_ESTADUAL);
   expect(numeroZeroComplementoVazio.dados_loja())
     .toBe(TEXTO_ESPERADO_SEM_NUMERO_SEM_COMPLEMENTO);
 });
 
 test('Número zero, complemento e bairro vazios', () => {
-  let numeroZeroComplementoVazioBairroVazio: Loja = new Loja(NOME_LOJA, 
-    LOGRADOURO, 0, "", "", MUNICIPIO, ESTADO, CEP, TELEFONE, OBSERVACAO, CNPJ,
+  let numeroZeroComplementoVazioBairroVazio: Loja = new Loja(NOME_LOJA,
+    new Endereco(LOGRADOURO, 0, "", "", MUNICIPIO, ESTADO, CEP), TELEFONE, OBSERVACAO, CNPJ,
     INSCRICAO_ESTADUAL);
   expect(numeroZeroComplementoVazioBairroVazio.dados_loja())
     .toBe(TEXTO_ESPERADO_SEM_NUMERO_SEM_COMPLEMENTO_SEM_BAIRRO);
@@ -232,12 +233,14 @@ test('Exercício 2 - customizado', () => {
   let cnpj = "";
   let inscricao_estadual = "";
 
-  let loja_customizada: Loja = new Loja(nome_loja, logradouro, numero,
-    complemento, bairro, municipio, estado, cep, telefone, observacao, cnpj,
+  let endereco_customizado: Endereco = new Endereco(logradouro, numero,
+    complemento, bairro, municipio, estado, cep);
+
+  let loja_customizada: Loja = new Loja(nome_loja, endereco_customizado, telefone, observacao, cnpj,
     inscricao_estadual);
 
   //E atualize o texto esperado abaixo
   expect(loja_customizada.dados_loja()).toBe(
-      `
+    `
 `);
 });
